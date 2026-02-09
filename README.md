@@ -116,11 +116,23 @@ collector.collect_stock("000001")
 | turnover_rate | REAL | 换手率 |
 | PRIMARY KEY | (symbol, date) | |
 
-## 测试
+## vn.py 数据迁移（Phase 1）
+
+已新增 `vnpy_adapter/` 模块，用于把 `daily_data` 表迁移到 vn.py SQLite 标准表 `dbbardata`。
+
+快速开始：
 
 ```bash
-pytest tests/ -v
+./venv/bin/python migrate_to_vnpy.py \
+  --source-db stocks_eastmoney.db \
+  --target-db vnpy_data.db \
+  --mode full \
+  --limit 10 \
+  --verify
 ```
+
+详情见：`vnpy_adapter/README.md`
+
 
 ## 依赖
 
