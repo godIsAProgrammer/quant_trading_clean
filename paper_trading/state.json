@@ -1,0 +1,22 @@
+{
+  "account": {
+    "total_capital": 2000000.0,
+    "available": 1852981.9078,
+    "positions": {
+      "600519.SSE": {
+        "volume": 100,
+        "avg_price": 1469.74
+      }
+    }
+  },
+  "orders": [
+    {
+      "order_id": "sim_000001",
+      "vt_symbol": "600519.SSE",
+      "direction": "\u591a",
+      "price": 1469.74,
+      "volume": 100,
+      "status": "\u5df2\u6210\u4ea4"
+    }
+  ]
+}
