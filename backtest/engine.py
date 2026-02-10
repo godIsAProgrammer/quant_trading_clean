@@ -110,6 +110,16 @@ class BacktestEngine:
         """处理订单"""
         self.orders.append(order)
         
+        # T+1 检查：检查是否试图卖出当日买入的持仓
+        if order.direction == Direction.SHORT and self.strategy:
+            current_date = self.current_date.strftime('%Y-%m-%d') if self.current_date else None
+            if current_date:
+                sellable = self.strategy.position.get_sellable_volume(current_date)
+                if order.volume > sellable:
+                    print(f"  [T+1阻止] 试图卖出 {order.volume}，但可卖持仓仅 {sellable}（今日已买 {self.strategy.position.today_bought.get(current_date, 0)}）")
+                    order.status = "cancelled"
+                    return  # 撤销订单
+        
         # 简化处理：市价单立即成交
         if order.status == "pending":
             bar = self.bars[self.current_idx] if self.current_idx < len(self.bars) else None
@@ -145,6 +155,15 @@ class BacktestEngine:
             order.filled_price = trade_price
             
             # 更新策略持仓
+        self.strategy.on_trade(trade)
+        
+        # T+1 记录：记录当日买入的持仓
+        if order.direction == Direction.LONG and self.current_date:
+            current_date = self.current_date.strftime('%Y-%m-%d')
+            self.strategy.position.today_bought[current_date] = \
+                self.strategy.position.today_bought.get(current_date, 0) + order.volume
+        
+        # 更新资金
             self.strategy.on_trade(trade)
             
             # 更新资金

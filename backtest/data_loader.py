@@ -1,11 +1,12 @@
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from pathlib import Path
 import sqlite3
 from typing import Dict, Iterable, List, Optional, Sequence
 
 import pandas as pd
+from backtest.price_adjust import adjust_prices, PriceValidator
 
 
 @dataclass(frozen=True)
@@ -13,6 +14,8 @@ class VnpyBarDataLoader:
     """读取 vn.py SQLite(dbbardata) 日线数据。"""
 
     db_path: str = "vnpy_data.db"
+    adjust_type: str = "none"  # none, forward, backward - 复权类型
+    skip_suspended: bool = True  # 是否跳过停牌日
 
     def _connect(self) -> sqlite3.Connection:
         path = Path(self.db_path).expanduser().resolve()
@@ -77,6 +80,19 @@ class VnpyBarDataLoader:
         df["datetime"] = pd.to_datetime(df["datetime"])
         df["date"] = df["datetime"].dt.date
         df["vt_symbol"] = df["symbol"] + "." + df["exchange"]
+        
+        # 停牌检测：剔除成交量为0的日期
+        if self.skip_suspended:
+            df = df[df['volume'] > 0].reset_index(drop=True)
+            if df.empty:
+                print(f"警告: {vt_symbol} 在指定时间段内全部停牌")
+                return df
+        df['is_suspended'] = df['volume'] == 0
+        
+        # 复权处理
+        if self.adjust_type != "none":
+            df = adjust_prices(df, adjust_type=self.adjust_type)
+        
         return df
 
     def load_many(

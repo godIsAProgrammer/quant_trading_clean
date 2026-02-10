@@ -58,6 +58,10 @@ class Position:
     volume: int = 0  # 正数=多头，负数=空头
     avg_price: float = 0.0
     
+    # T+1 持仓管理：记录每日买入和卖出的持仓
+    # key: 日期字符串 (YYYY-MM-DD), value: 当日买入的持仓量
+    today_bought: Dict[str, int] = field(default_factory=dict)
+    
     @property
     def is_long(self) -> bool:
         return self.volume > 0
@@ -69,6 +73,14 @@ class Position:
     @property
     def is_flat(self) -> bool:
         return self.volume == 0
+    
+    def get_sellable_volume(self, current_date: str) -> int:
+        """获取当日可卖出的持仓量（T+1限制：今天买的不能卖）"""
+        if self.volume <= 0:
+            return 0
+        # 可卖持仓 = 总持仓 - 今日买入持仓
+        today_bought = self.today_bought.get(current_date, 0)
+        return max(0, self.volume - today_bought)
 
 
 @dataclass
