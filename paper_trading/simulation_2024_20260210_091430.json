@@ -1,0 +1,78 @@
+{
+  "account": {
+    "total_capital": 2000000.0,
+    "available": 1838573.5866,
+    "positions": {
+      "600519.SSE": {
+        "volume": 100,
+        "avg_price": 1613.78
+      }
+    }
+  },
+  "orders": [
+    {
+      "order_id": "sim_000001",
+      "vt_symbol": "600519.SSE",
+      "direction": "\u591a",
+      "price": 1613.78,
+      "volume": 100,
+      "status": "\u5df2\u6210\u4ea4"
+    },
+    {
+      "order_id": "sim_000002",
+      "vt_symbol": "600519.SSE",
+      "direction": "\u7a7a",
+      "price": 1593.91,
+      "volume": 100,
+      "status": "\u5df2\u62d2\u7edd"
+    },
+    {
+      "order_id": "sim_000003",
+      "vt_symbol": "600519.SSE",
+      "direction": "\u7a7a",
+      "price": 1583.68,
+      "volume": 100,
+      "status": "\u5df2\u62d2\u7edd"
+    },
+    {
+      "order_id": "sim_000004",
+      "vt_symbol": "600519.SSE",
+      "direction": "\u7a7a",
+      "price": 1322.56,
+      "volume": 100,
+      "status": "\u5df2\u62d2\u7edd"
+    },
+    {
+      "order_id": "sim_000005",
+      "vt_symbol": "600519.SSE",
+      "direction": "\u7a7a",
+      "price": 1304.56,
+      "volume": 100,
+      "status": "\u5df2\u62d2\u7edd"
+    },
+    {
+      "order_id": "sim_000006",
+      "vt_symbol": "600519.SSE",
+      "direction": "\u7a7a",
+      "price": 1294.64,
+      "volume": 100,
+      "status": "\u5df2\u62d2\u7edd"
+    },
+    {
+      "order_id": "sim_000007",
+      "vt_symbol": "600519.SSE",
+      "direction": "\u7a7a",
+      "price": 1403.52,
+      "volume": 100,
+      "status": "\u5df2\u62d2\u7edd"
+    },
+    {
+      "order_id": "sim_000008",
+      "vt_symbol": "600519.SSE",
+      "direction": "\u7a7a",
+      "price": 1485.84,
+      "volume": 100,
+      "status": "\u5df2\u62d2\u7edd"
+    }
+  ]
+}

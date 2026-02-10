@@ -1,0 +1,15 @@
+{
+  "date": "20260210_091430",
+  "initial_capital": 2000000.0,
+  "final_value": 1985618.5866,
+  "pnl": -14381.413399999961,
+  "pnl_pct": -0.719070669999998,
+  "trades": 1,
+  "positions": {
+    "600519.SSE": {
+      "volume": 100,
+      "avg_price": 1613.78
+    }
+  },
+  "pass_criteria": false
+}
