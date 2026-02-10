@@ -155,16 +155,13 @@ class BacktestEngine:
             order.filled_price = trade_price
             
             # 更新策略持仓
-        self.strategy.on_trade(trade)
-        
-        # T+1 记录：记录当日买入的持仓
-        if order.direction == Direction.LONG and self.current_date:
-            current_date = self.current_date.strftime('%Y-%m-%d')
-            self.strategy.position.today_bought[current_date] = \
-                self.strategy.position.today_bought.get(current_date, 0) + order.volume
-        
-        # 更新资金
             self.strategy.on_trade(trade)
+            
+            # T+1 记录：记录当日买入的持仓
+            if order.direction == Direction.LONG and self.current_date:
+                current_date = self.current_date.strftime('%Y-%m-%d')
+                self.strategy.position.today_bought[current_date] = \
+                    self.strategy.position.today_bought.get(current_date, 0) + order.volume
             
             # 更新资金
             if order.direction == Direction.LONG:
